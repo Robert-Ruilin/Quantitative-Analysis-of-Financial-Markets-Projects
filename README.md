@@ -1,7 +1,7 @@
 # Quantitative-Analysis-of-Financial-Markets-Projects
-1. Mini project
+Mini project
 
-2. Final project - Application: Stock Picking
+Final project - Application: Stock Picking
 Given daily prices of 100 stocks from April 1999 to December 2018.
 We can get: 
   1. Jensen’s Alpha for each stock
