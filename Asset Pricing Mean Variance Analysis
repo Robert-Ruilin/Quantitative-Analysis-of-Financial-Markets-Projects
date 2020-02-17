@@ -21,6 +21,7 @@ Calculate the weights of the ten industry portfolios at the tangency portfolio.
 Briefly explain the economic significance of this tangency portfolio.
 """
 
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
