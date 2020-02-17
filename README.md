@@ -4,9 +4,9 @@
 2. Final project - Application: Stock Picking
 Given daily prices of 100 stocks from April 1999 to December 2018.
 We can get: 
-1. Jensen’s Alpha for each stock
-2. Beta for each stock
-3. Monthly simple returns for each stock
+  1. Jensen’s Alpha for each stock
+  2. Beta for each stock
+  3. Monthly simple returns for each stock
 
 We can construct our portfolio by 1st strategy, which is:
 - Long top 10 stocks which earn highest Jensen’s alpha,
