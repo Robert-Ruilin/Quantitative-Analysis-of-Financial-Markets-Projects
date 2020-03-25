@@ -1,0 +1,896 @@
+\documentclass{article}
+\usepackage{bbm,amsfonts,amsmath,enumerate,geometry}
+\title{\textbf{QF603 - Quantitative Analysis for Financial Market}}
+\author{HE Ruilin}
+\geometry{left=2cm,right=2cm,top=1cm,bottom=2cm}
+\begin{document}
+	\maketitle
+\begin{enumerate}[S1 - ]
+	\item \textbf{Probabilities \& Bayesian Analysis}\\\par
+    \textbf{- Event:}\\
+    1. A set of outcomes of an experiment (a subset of the sample space) to which a probability is assigned.\\
+    2. Its occurrence is uncertain.\\
+    \\
+    \textbf{- Outcome:}\\
+    1. An outcome is a possible result of an experiment or trial.\\
+    2. Each possible outcome of a particular experiment is unique, and different outcomes are mutually exclusive.\\
+    3. Only one outcome will occur on each trial of the experiment.\\
+    4. All of the possible outcomes of an experiment form the elements of a sample space.\\
+    \\
+    \textbf{- Random Variables:}\\
+    1. A discrete random variable $X$ can take on only a countable number of values.
+    \begin{equation*}
+    P(X = x_{i}) = p_{i}, \ \ i = 1,2,...,n
+    \end{equation*}
+    2. A continuous random variable $X$ can take on any value within a given range.
+    \begin{equation*}
+    P(r_{1} < X < r_{2}) = p
+    \end{equation*}
+    \\
+    \textbf{- Probability Density Function:}\\
+    1. A function whose value at any given point in the set of possible values taken by the random variable can be interpreted as providing a relative likelihood that the value of the random variable would equal that point.\\
+    2. The absolute likelihood for a continuous random variable to take on any particular value is 0.\\
+    3. The probability density function is non-negative everywhere, and its integral over the entire space is equal to 1.\\
+    4. For the probability $p$ of $X$ lying between $r1$ and $r2$, we define the density function $f(x)$ as follows:
+    \begin{equation*}
+    \int_{r1}^{r2} f(x)dx = p
+    \end{equation*}
+    \\
+    \textbf{- Cumulative Density Function:}\\
+    1. The cumulative distribution function of a  random variable $X$, evaluated at $x$, is the probability that $X$ will take a value less than or equal to $x$.\\
+    2. The cumulative distribution function is defined as follows:
+    \begin{equation*}
+    F_{X}(x) = P(X \leq x) = \int_{-\infty}^{x} f_{X}(t)dt
+    \end{equation*}
+    3. Here are some properties of CDF.
+    \begin{equation*}
+    0 \leq F(x) \leq 1
+    \end{equation*}
+    \begin{equation*}
+    P(a<X\leq b) = \int_{a}^{b} f(x)dx = F(b)-F(a)
+    \end{equation*}
+    \begin{equation*}
+    P(X > a) = 1-F(a)
+    \end{equation*}
+    \\
+    \textbf{- Quantile Function:}\\
+    1. The quantile function is also called inverse cumulative density function, which is defined as follows:
+    \begin{equation*}
+    F(a) = p \Leftrightarrow F^{-1}(p) =a
+    \end{equation*}
+    2. $F^{-1}(p)$ is monotonically increasing.\\
+    3. If and only if $y \leq F(x)$, then $F^{-1}(y) \leq x$.\\
+    4. If $Y$ has a uniform distribution in the interval $[0, 1]$, then $F^{-1}(Y)$ is a
+    random variable with distribution $F$.\\
+    \\
+    \textbf{- Law of total probability:}\\
+    1. The probability of two mutually exclusive events $A$ and $B$ occurring is just the sum of their individual probabilities.
+    \begin{equation*}
+    P(A \cup B) = P(A) + P(B)
+    \end{equation*}
+    2. If the outcome of one random variable is not influenced by the outcome of the other random variable, then those variables are independent.
+    \begin{equation*}
+    P(A \cap B) = P(A) \times P(B)
+    \end{equation*}
+    3. If two variables are dependent, then the joint probability is
+    \begin{equation*}
+    P(A \cap B) = P(A|B) \times P(B)
+    \end{equation*}
+    4. If a random variable $X$ has $n$ possible values, $x_1, x_2,...,x_n$, we have the law of total probability.
+    \begin{equation*}
+    P(Y) = \sum_{i=1}^{n} P(Y|X=x_i) P(X=x_i)
+    \end{equation*}
+    \\
+    \textbf{- Bayes' Theorem:}\\
+    1. The Bayes' theorm is defined as follows:
+    \begin{equation*}
+    P(A|B) = \frac{P(B|A) P(A)}{P(B)}
+    \end{equation*}
+    $P(A)$ is Prior Probability,\\
+    $P(B|A)$ is Likelihood,\\
+    $P(B)$ is Predictor Prior Probability,\\ $P(A|B)$ is Posterior Probability.\\
+    2. A shortcut for calculating Posterior Probability is to set an arbitrary constant $c$
+    \begin{equation*}
+    c \sum_{i=1}^{n} P(B|p=x_i)P(p=x_i) =1
+    \end{equation*}
+    Solving for $c$, we can figure out Posterior Probability given by a set of $A$
+    \begin{equation*}
+    P(p=x_i|B) = c P(B|p=x_i)P(p=x_i)
+    \end{equation*}
+    3. Coin-Flipping Problem *\\
+    \\
+    \textbf{STEP 1: Build the model and set bias parameter $\theta$}\\
+    Let $y$ be the number of heads in $N$ tosses.
+    \begin{equation*}
+    P(\theta|y) \propto P(y|\theta)P(\theta)
+    \end{equation*}
+    The bias parameter $\theta$ is within the range $[0,1]$. $\theta$ indicates how likely coin lands head. Bias of 1 (0) will always land heads (tails).\\
+    \\
+    \textbf{STEP 2: Denote the likelihood of model}\\
+    The likelihood that there are $y$ heads in $N$ tosses following binomial distribution is
+    \begin{equation*}
+    P(y|\theta) = \frac{N!}{y!(N-y)!}\theta^{y}(1-\theta)^{N-y}
+    \end{equation*}
+    \\
+    \textbf{STEP 3: Denote the prior function of model}\\
+    The $\beta$ probability density function of prior is
+    \begin{equation*}
+    f(\theta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\theta^{\alpha-1}(1-\theta)^{\beta-1}
+    \end{equation*}
+    The reason why using $\beta$ PDF is that\\
+    (a) $\theta$ is restricted to be between 0 and 1.\\
+    (b) The shape of $f(\theta)$ is versatile.\\
+    (c) $\beta$ PDF is the conjugate prior of the binomial distribution which we use as the likelihood.\\
+    \\
+    \textbf{STEP 4: Output $\beta$ PDF for posterior of model}\\
+    The posterior is proportional to the likelihood times the prior
+    \begin{equation*}
+    \begin{split}
+    P(\theta|y) & \propto \frac{N!}{y!(N-y)!}\theta^{y}(1-\theta)^{N-y}\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\theta^{\alpha-1}(1-\theta)^{\beta-1}\\
+    & \propto \theta^{y}(1-\theta)^{N-y}\theta^{\alpha-1}(1-\theta)^{\beta-1}\\
+    & = \theta^{y+\alpha-1}(1-\theta)^{N-y+\beta-1}
+    \end{split}
+    \end{equation*}
+    The $\beta$ PDF for posterior can be written as
+    \begin{equation*}
+    P(\theta|y) = Beta(\alpha_{prior}+y,\beta_{prior}+N-y)
+    \end{equation*}
+    There are 3 types of priors, which are\\
+    (a) Non-informative priors - aka flat, vague, or diffuse priors\\
+    (b) Weakly informative priors - regularizing priors\\
+    (c) Informative priors \\
+    \\
+    \textbf{STEP 5: Find the probable posterior to solve the problem}\\
+    The most probable value is given by the model of the posterior, which is \textbf{the peak of PDF}.\\
+    The \textbf{Highest Posterior Density interval} is the shortest interval containing a given portion (95\%) of the probability density.\\
+    When posterior's $\beta$ PDF is bimodel, we need to have two HPD intevals.\\
+    
+    \item \textbf{Statistics \& Distributions} \\\par
+    \textbf{- Population \& Sample:}\\
+    1. Given a random variable $X$, the mean and variance of a statistical population are
+    \begin{equation*}
+    E(X) = \mu, \ V(X) = E((X-\mu)^{2}) = E(X^2)-\mu^2= \sigma^{2}
+    \end{equation*}
+    2. The sample average and variance estimators are
+    \begin{equation*}
+    \hat{\mu} = \frac{1}{n} \sum_{i=1}^{n} x_i, \ \hat{\sigma}^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i-\hat{\mu})^2
+    \end{equation*}
+    3. Given 2 random variables $X,Y$, the covariance between $X$ and $Y$ is
+    \begin{equation*}
+    \sigma_{XY} = C(X,Y) = E((X-\mu_X)(Y-\mu_Y)) = E(X,Y) - \mu_X\mu_Y
+    \end{equation*}
+    If $X$ and $Y$ are independent, then it must be that $C(X,Y) = 0$.\\
+    But if $C(X,Y) = 0$, it is not necessarily true that $X$ and $Y$ are independent.\\
+    \\
+    4. The correlation between $X$ and $Y$ is
+    \begin{equation*}
+    \rho_{XY} = \frac{\sigma_{XY}}{\sigma_{X}\sigma_{Y}}
+    \end{equation*}
+    High correlation does not necessarily imply causation of one variable on the other.\\
+    If two variables are uncorrelated, it does not necessarily follow that they are unrelated.\\
+    \\
+    \textbf{- Law of Large Number:}\\
+    1. Law of Large Number is a theorem that describes the result of performing the same experiment a large number of times.\\
+    2. According to the law, the average of the results obtained from a large number of trials should be close to the \textbf{expected value}, and will tend to become closer to the expected value as more trials are performed.
+    \begin{equation*}
+    \lim_{x \to \infty} \frac{1}{n} \sum_{t=1}^{n} X_{t} \rightarrow \mu = E(X_{t})
+    \end{equation*}
+    \\
+    \textbf{- Central Limit Theorem:}\\
+    1. Central limit theorem establishes that when independent random variables are added, their properly normalized sum tends toward a \textbf{normal distribution} even if the original variables themselves are not normally distributed.\\
+    2. For sufficiently large sample size $n$, given $\mu$ and $\sigma$
+    \begin{equation*}
+    Y = \frac{\frac{1}{n} \sum_{t=1}^{n} X_t-\mu}{\frac{\sigma}{\sqrt{n}}}
+    \end{equation*}
+    \begin{equation*}
+    \frac{1}{n} \sum_{t=1}^{n} X_t = \mu +\frac{\sigma}{\sqrt{n}} Y \sim N\left(\mu,\frac{\sigma^2}{n}\right)
+    \end{equation*}
+    \\
+    \textbf{- Model 0:}\\
+    1. Let $Y$ be normalized sum of random variables $X_t, t=1,2,...,n$, which are i.i.d.\\
+    2. Based on Central Limit Theorem, we rewrite the formula and introduce Model 0
+    \begin{equation*}
+    \begin{split}
+    \mu & = \frac{1}{n} \sum_{t=1}^{n} X_t - \frac{\sigma}{\sqrt{n}} Y\\
+    \Rightarrow X & = \frac{1}{n} \sum_{t=1}^{n} X_t + \zeta Z\\
+    \Rightarrow X & = \bar{X} +\zeta Z
+    \end{split}
+    \end{equation*}
+    3. Given the dataset $\{X_t\}_{t=1}^n$, a forecast of $X$ is the sample mean.
+    \begin{equation*}
+    E(X|\{X_t\}_{t=1}^n) = \bar{X}
+    \end{equation*}
+    4. The forecast that minimizes mean squared error is the sample mean $\bar{X}$
+    \begin{equation*}
+    \hat{X}_{n+1}=\bar{X}
+    \end{equation*}
+    \textbf{Proposition:} The standard deviation of the forecast $s_f$ is larger than the standard deviation $s$ of Model 0. Here is the proof\\
+    \begin{equation*}
+    \begin{split}
+    X_{n+1} & = \bar{X} + \zeta Z\\
+    V(X_{n+1}) & = V(\bar{X}) + \zeta^2\\
+    s_f = \sqrt{V(X_{n+1})} & = \sqrt{\frac{s^2}{n}+s^2} = s\sqrt{1+\frac{1}{n}} > s
+    \end{split}
+    \end{equation*}
+    \\
+    \textbf{- Sample Mean:}\\
+    1. The sample mean $\bar{X}$ is defined as follows, which itself is a random variable with mean and variance
+    \begin{equation*}
+    \bar{X} = \frac{1}{n} \sum_{t=1}^{n} X_t
+    \end{equation*}
+    \begin{equation*}
+    E(\bar{X}) = \frac{1}{n} \sum_{t=1}^{n} E(X_t) =\mu, \ V(\bar{X}) = \frac{1}{n^2} \sum_{t=1}^{n} V(X_t) =\frac{\sigma^2}{n}
+    \end{equation*}
+    2. The unbiased sample variance is
+    \begin{equation*}
+    s^2 = \frac{1}{n-1} \sum_{t=1}^{n} (X_t-\bar{X})^2
+    \end{equation*}
+    3. The ratio of the sample variance with population variance is 
+    \begin{equation*}
+    V = (n-1)\frac{s^2}{\sigma^2} \sim \chi_{n-1}^2
+    \end{equation*}
+    4. Statistics for simple mean
+    \begin{equation*}
+    \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma} \sim N(0,1), \ \frac{\sqrt{n}(\bar{X}-\mu)}{S} \sim t_{n-1}
+    \end{equation*}
+    \\
+    \textbf{- Property of statistic:}\\
+    1. \textbf{Unbiasdness:} A statistic $\psi(X)$ is an unbiased estimator of $\theta$ if
+    \begin{equation*}
+    E(\psi(X))=\theta
+    \end{equation*}
+    The bias of an estimator $\hat{\theta}$ is the difference between expected value of statistic and the true value of $\theta$.
+    \begin{equation*}
+    Bias = E(\psi(X)) -\theta = E(\hat{\theta})-\theta
+    \end{equation*}
+    \textbf{Proposition:} Sample mean is an unbiased estimator of population mean, Sample variance is an unbiased estimator of population variance.\\
+    \\
+    2. \textbf{Consistency:} A sequence of estimators $\theta_n(X)$ from sample $X$ of size $n$ is a consistent estimator if
+    \begin{equation*}
+    \theta_n \rightarrow \theta \ \text{as} \ n \rightarrow \infty
+    \end{equation*}
+    An estimator is consistent if its difference with the true value of $\theta$ becomes smaller and insignificant, as the sample size grows larger and larger.\\
+    The more data you collect, a consistent estimator will be close to the real population parameter you’re trying to measure.\\
+    \\
+    3. \textbf{Efficiency:} Given the dataset $X$, an unbiased estimator $\psi_{*}(X)$ is efficient if for any other unbiased estimator $\psi(X)$
+    \begin{equation*}
+    V(\psi_{*}(X)) \leq V(\psi(X))
+    \end{equation*}
+    $\psi$ is \textbf{BLUE} (best linear unbiased estimator), if $\psi$ is efficient.\\
+    \\
+    \textbf{- Hypothesis Test:}\\
+    1. Let $H_0$ denote the null hypothesis, $H_A$ denote the alternative hypothesis. A statistical test of hypothesis is a decision rule that eithor rejects or does not reject the null $H_{0}$.\\
+    2. The \textbf{critical region} is the set of values that leads to the rejection of $H_0$.\\
+    3. The \textbf{significance level} is the probability of rejecting $H_0$ when it is true.\\
+    4. The \textbf{$P$ value} is the observed significance level, which is the probability of getting a value of the $t$ statistic that is extreme or more extreme than the observed value of $t$ statistic.\\
+    \\
+    \textbf{Proposition:} The smaller the $P$ value is, the more probability that the null hypothesis $H_0$ will be rejected.\\
+    \\
+    5. Type 1 error is that if $H_0$ is true but is rejected, while Type 2 error is that $H_0$ is false but is accepted.\\
+    \\
+    \begin{tabular}{ccc}
+    \hline
+    Result of the Test & $H_0$ is true & $H_0$ is false\\
+    \hline
+    Reject $H_0$ & Type 1 error (significance level $= \alpha$) & Correct inference\\
+    Do not reject $H_0$ & Correct inference & Type 2 error ($1 - \text{power of a test} = 1 - \beta$)\\
+    \hline
+    \end{tabular}\\
+    \\
+    6. The probability of $\mu$ falling within the confidence interval is $1 - \alpha$, with the given critical value $a$.
+    \begin{equation*}
+    P\left(\bar{X}-a\frac{s}{\sqrt{n}} \leq \mu \leq \bar{X}+a\frac{s}{\sqrt{n}} \right) = 1 - \alpha
+    \end{equation*}
+    \\
+    \textbf{- Bernoulli Distribution:}\\
+    1. The discrete probability distribution of a random variable which takes the value 1 with probability $p$ and the value 0 with probability $q=1-p$.\\
+    2. The mean and variance of a Bernoulli random variable are
+    \begin{equation*}
+    \mu = p, \ \sigma^2 = p(1-p)
+    \end{equation*}
+    3. The probability mass function of a Bernoulli random variable is
+    \begin{equation*}
+    P(X=x) = p^{x}(1-p)^{1-x}
+    \end{equation*}
+    4. The cumulative mass function of a Bernoulli random variable is
+    \begin{equation*}
+    F(X=x) = \left\{
+    \begin{aligned}
+    1-p, & \ \text{for}\ x = 0;\\
+    1, & \ \text{for}\ x = 1.
+    \end{aligned}
+    \right.
+    \end{equation*}
+    \\
+    \textbf{- Binomial Distribution:}\\
+    1. The binomial distribution gives the discrete probability distribution $P(n,N,p)$ of obtaining exactly $n$ successes out of $N$ Bernoulli trials.\\
+    2. The mean and variance of a Binomial random variable are
+    \begin{equation*}
+    \mu = np, \ \sigma^2 = np(1-p)
+    \end{equation*} 
+    3. The probability mass function of a Binomial random variable is
+    \begin{equation*}
+    P(n,N,p) = \left(\begin{aligned}
+    N\\
+    n
+    \end{aligned}\right)
+    p^{n}(1-p)^{N-n}
+    \end{equation*}
+    \\
+    \textbf{- Poisson Distribution:}\\
+    1. A discrete probability distribution that expresses the probability of a given number of events occurring in a fixed interval of time or space if these events occur with a known constant rate $\lambda$ and independently of the time since the last event.\\
+    2. The mean and variance of a Poisson random variable are
+    \begin{equation*}
+    \mu = \lambda, \ \sigma^2 = \lambda
+    \end{equation*}
+    3. The probability mass function of a Poisson random variable is
+    \begin{equation*}
+    P(X=n) = \frac{\lambda^n}{n!}e^{-\lambda}
+    \end{equation*}
+    \\
+    4. Poisson distribution is a limiting case of binomial model.\\
+    \\
+    \textbf{- Uniform Distribution:}\\
+    1. The uniform distribution is a piecewise continuous distribution describing an experiment where there is an arbitrary outcome that lies between certain bounds $[a,b]$.\\
+    2. The mean and variance of a Uniform random variable are
+    \begin{equation*}
+    \mu = \frac{a+b}{2}, \ \sigma^2 = \frac{(b-a)^{2}}{12}
+    \end{equation*}
+    3. The probability density function of a Uniform random variable is
+    \begin{equation*}
+    f(x) = \left\{
+    \begin{aligned}
+    \frac{1}{b-a}, & \ \text{for}\ x \in [a,b];\\
+    0, & \ \text{otherwise}.
+    \end{aligned}
+    \right.
+    \end{equation*}
+    4. The cumulative density function of a Uniform random variable is
+    \begin{equation*}
+    F(x) = \left\{
+    \begin{aligned}
+    0, & \ \text{for}\ x < a;\\
+    \frac{x-a}{b-a}, & \ \text{for}\ x \in [a,b);\\
+    1, & \ \text{for}\ x \geq b..
+    \end{aligned}
+    \right.
+    \end{equation*}
+    \\
+    \textbf{- Triangular Distribution:}\\
+    1. The triangular distribution is a continuous probability distribution with lower limit $a$, upper limit $b$ and mode $c$, where $a < b$ and $a \leq c \leq b$.\\
+    2. The mean and variance of a Triangular random variable are
+    \begin{equation*}
+    \mu = \frac{a+b+c}{3}, \ \sigma^2 = \frac{a^2+b^2+c^2-ab-ac-bc}{18}
+    \end{equation*}
+    3. The probability density function of a Triangular random variable is
+    \begin{equation*}
+    f(x) = \left\{
+    \begin{aligned}
+    \frac{2(x-a)}{(b-a)(c-a)}, & \ \text{for}\ x \in [a,c);\\
+    \frac{2(b-x)}{(b-a)(b-c)}, & \ \text{for}\ x \in (c,b];\\
+    0, & \ \text{otherwise}.
+    \end{aligned}
+    \right.
+    \end{equation*}
+    4. The cumulative density function of a Triangular random variable is
+    \begin{equation*}
+    F(x) = \left\{
+    \begin{aligned}
+    0, & \ \text{for}\ x < a;\\
+    \frac{(x-a)^2}{(b-a)(c-a)}, & \ \text{for}\ x \in [a,c);\\
+    1-\frac{(b-x)^2}{(b-a)(b-c)}, & \ \text{for}\ x \in (c,b];\\
+    1, & \ \text{for}\ x > b..
+    \end{aligned}
+    \right.
+    \end{equation*}
+    5. Application: When modeling default rates and recovery rates, Triangular Distribution is useful.\\
+    \\
+    \textbf{- Normal Distribution:}\\
+    1. A random variable with a Gaussian distribution is normally distributed and is called a normal deviate.\\
+    2. The probability density function of a Normal random variable is
+    \begin{equation*}
+    f(x;\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \ X\sim N(\mu,\sigma^2)
+    \end{equation*}
+    3. The cumulative density function of a Normal random variable is
+    \begin{equation*}
+    F(x;\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^{x} e^{-\frac{(x-\mu)^2}{2\sigma^2}} dx
+    \end{equation*}
+    4. Other property: Shewness = 0, Kurtosis = 3, Linear Additivity.\\
+    5. Standard Normal Distribution is $N(0,1)$ with the probability density function
+    \begin{equation*}
+    \phi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}, \ X\sim N(0,1)
+    \end{equation*}
+    6. In practice, we use log returns which follow normal distribution to measure the stock performance. The reason is that normal random variable can realize values ranging from $-\infty$ to $\infty$.\\
+    \\
+    7. Normal Distribution Confidence Intervals\\
+    \begin{table}[!hbp]
+    \centering
+    \begin{tabular}{ccc}
+    \hline
+    & One-Tailed & Two-Tailed\\
+    \hline
+    90.00\% & 1.28 & 1.64\\
+    95.00\% & 1.64 & 1.96\\
+    97.50\% & 1.96 & 2.24\\
+    99.00\% & 2.33 & 2.58\\
+    \hline
+    \end{tabular}
+    \end{table}\\
+    \\
+    \textbf{- Lognormal Distribution:}\\
+    1. The lognormal distribution is a continuous probability distribution of a random variable whose logarithm is normally distributed.\\
+    2. The mean and variance of a Lognormal random variable are
+    \begin{equation*}
+    \mu = e^{\mu+\frac{\sigma^2}{2}}, \ \sigma^2 = (e^{\sigma^2}-1)e^{2\mu+\sigma^2}
+    \end{equation*}
+    3. The probability density function of a Lognormal random variable is
+    \begin{equation*}
+    f(x;\mu,\sigma) = \frac{1}{x\sigma\sqrt{2\pi}}e^{-\frac{(\ln x-\mu)^2}{2\sigma^2}}
+    \end{equation*}
+    \\
+    \textbf{- Chi-Squared Distribution:}\\
+    1. The chi-squared distribution with $k$ degrees of freedom is the distribution of a sum of the squares $S$ of $k$ independent standard normal random variables $Z_i, i=1,2,...,n$.
+    \begin{equation*}
+    S = \sum_{i=1}^{k} Z_{i}^{2} =  \sum_{i=1}^{k} \frac{(X_i-\mu_i)^2}{\sigma^2} \approx  \sum_{i=1}^{k} \frac{(X_i-\mu_i)^2}{\mu_i}, \ S\sim \chi_{k}^{2}
+    \end{equation*}
+    2. The mean and variance of a Chi-squared random variable are
+    \begin{equation*}
+    \mu = k, \ \sigma^2 = 2k
+    \end{equation*}
+    3. The probability density function of a Chi-squared random variable is
+    \begin{equation*}
+    f(x) = \frac{1}{2^\frac{k}{2}\Gamma(\frac{k}{2})}x^{\frac{k}{2}-1}e^{-\frac{x}{2}}
+    \end{equation*}
+    where $\Gamma$ is the gamma function
+    \begin{equation*}
+    \Gamma(n) = \int_{0}^{\infty} x^{n-1}e^{-x}dx
+    \end{equation*}
+    4. As $k$ increases, the chi-squared distribution becomes increasingly symmetrical. As $k$ approaches infinity, the chi-squared distribution
+    converges to the normal distribution.\\
+    \\
+    \textbf{- Student's $t$ Distribution:}\\
+    1. The student's $t$ distribution is to estimate the mean of a normally distributed population in situations where\\
+    (a) The sample size is small ($n \leq 30$);\\
+    (b) The population standard deviation is unknown.\\
+    2. If $X$ is a standard normal variable and $s^2$ is a chi-square variable with k degrees of freedom, which is independent of $X$, then the
+    random variable $Y$
+    \begin{equation*}
+    Y = \frac{X}{\frac{s}{\sqrt{k}}} \sim t_{k-1}
+    \end{equation*}
+    follows a $t$ distribution with $k-1$ degrees of freedom.\\
+    3. The probability density function of a Student's $t$ random variable is
+    \begin{equation*}
+    f(x) = \frac{\Gamma(\frac{k+1}{2})}{\sqrt{k\pi}\Gamma(\frac{k}{2})}(1+\frac{x^2}{k})^{-\frac{k+1}{2}}
+    \end{equation*}
+    4. The $t$ distribution is symmetrical, its mean and variance are
+    \begin{equation*}
+    \mu = 0, \ \sigma^2 = \left\{
+    \begin{array}{cc}
+    \frac{k}{k-2},& \ \text{for} \ k > 2\\
+    \text{converge} \rightarrow 1,& \ \text{as k increases}
+    \end{array}
+    \right.
+    \end{equation*}
+    As $k$ increases, the excess kurtosis decreases.\\
+    As $k \rightarrow \infty$, the $t$ distribution converges to a standard normal distribution.\\
+    Fatter tails compared to standard normal.\\
+    \\
+    \textbf{- $F$-Distribution:}\\
+    1. A continuous probability distribution that arises frequently as the null distribution of a test statistic.\\
+    2. If $\chi_1$ and $\chi_2$ are two independent chi-squared distributions with $k_1$ and $k_2$ degrees of freedom, respectively, then $X$
+    \begin{equation*}
+    X = \frac{\frac{\chi_1}{k_1}}{\frac{\chi_2}{k_2}} \sim F(k_1,k_2)
+    \end{equation*}
+    follows an $F$-distribution with degrees of freedom $k_1$ and $k_2$.\\
+    3. The probability density function of a $F$ -distribution random variable is
+    \begin{equation*}
+    f(x) = \frac{\sqrt{\frac{(k_{1}x)^{k_1}k_{2}^{k_2}}{(k_{1}x+k_{2})^{k_1+k_2}}}}{xB(\frac{k_1}{2},\frac{k_2}{2})}
+    \end{equation*}
+    where $B(x,y)$ is the $\beta$ function
+    \begin{equation*}
+    B(x,y) = \int_{0}^{1} z^{x-1}(1-z)^{y-1}dz
+    \end{equation*}
+    4. The mean and variance of a $F$-distribution random variable are
+    \begin{equation*}
+    \mu = \frac{k_2}{k_2-2}, \ \sigma^2 = \frac{2k_{2}^2(k_1+k_2-2)}{k_1(k_2-2)^2(k_2-4)}
+    \end{equation*}
+    As $k_1$ and $k_2 \to \infty$, the mean and mode converge to 1, the $F$-distribution converges to a normal distribution.\\
+    
+    \item \textbf{Linear Regression}\\\par
+    \textbf{- Simple Linear Regression:}\\
+    1. Given $n$ pairs of observations on explanatory variable $X_i$, and dependent variable $Y_i$, we denote \textbf{Model 1} to the following expression
+    \begin{equation*}
+    Y_i = a + bX_i +e_i, \ i=1,2,...,n.
+    \end{equation*}
+    The assumptions for the noise $e_i$ are\\
+    (a) $E(e_i) = 0$ for every $i$;\\
+    (b) $E(e_{i}^2) = \sigma_e^2$;\\
+    (c) $E(e_ie_j) = 0$;\\
+    (d) $X_i,e_j$ are independent; and\\
+    (e) $e_i \sim N(0,\sigma_e^2)$\\
+    2. The OLS estimators are unbiased.
+    \begin{equation*}
+    E(\hat{a}) = a, \ E(\hat{b}) = b
+    \end{equation*}
+    3. The Slope and Intercept estimators are
+    \begin{equation*}
+    \hat{b} = \frac{\sum_{i=1}^{n}(X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^{n}(X_i-\bar{X})^2}, \ \hat{a} = \bar{Y} -\hat{b}\bar{X}
+    \end{equation*}
+    4. The OLS estimators $\hat{a}$ and $\hat{b}$ have the minimum variances, thus OLS estimators under classical conditions are \textbf{BLUE}.\\
+    5. Written in the vector-matrix form, the BLUE is
+    \begin{equation*}
+    Y = X\beta +e, \ Y = \left(
+    \begin{array}{c}
+    Y_1\\Y_2\\...\\Y_n
+    \end{array}\right), \ X = \left(
+    \begin{array}{c}
+    1 \ X_1\\1 \ X_2\\...\\1 \ X_n
+    \end{array}\right), \ \beta = \left(
+    \begin{array}{c}
+    a\\b\end{array}\right), \ e = \left(
+    \begin{array}{c}
+    e_1\\e_2\\...\\e_n
+    \end{array}\right)
+    \end{equation*}
+    The slope coefficient estimator can be written as
+    \begin{equation*}
+    \hat{\beta} = (X^{'}X)^{-1}X^{'}Y
+    \end{equation*}
+    \textbf{Proposition:} Given the data matrix $X$, the estimator $\hat{\beta}$ is unbiased.
+    \begin{equation*}
+    E_X(\hat{\beta}) = \beta
+    \end{equation*}
+    \textbf{Proposition:} The variance-covariance matrix of OLS estimator is
+    \begin{equation*}
+    V_X(\hat{\beta}) = \sigma^2(XX^{'})^{-1}
+    \end{equation*}
+    \textbf{Proposition:} Given the data matrix $X$, the variance of $Y$ is the variance of the noise $\sigma_e^2$.\\
+    \\
+    6. The variance of residual $\hat{e}_i = Y_i -\hat{Y}_i$ is estimated as
+    \begin{equation*}
+    \hat{\sigma_e}^2 = \frac{1}{n-2}\sum_{i=1}^{n} \hat{e_i}^2 = \frac{\text{RSS}}{n-2}
+    \end{equation*}
+    7. The standard error of estimators are
+    \begin{equation*}
+    SE(\hat{b}) = \hat{\sigma}_e \sqrt{\frac{1}{\sum_{i=1}^{n}(X_i-\bar{X})^2}}, \  SE(\hat{a}) = \hat{\sigma}_e \sqrt{\frac{1}{n}+\frac{\bar{X}^2}{\sum_{i=1}^{n}(X_i-\bar{X})^2}}
+    \end{equation*}
+    8. The biased second-order estimators approach the population variances $\sigma_X^2$,$\sigma_Y^2$,and $\sigma_{XY}$.
+    \begin{equation*}
+    S_X^2 = \frac{\sum_{i=1}^{n}(X_i-\bar{X})^2}{n}, \ S_Y^2 = \frac{\sum_{i=1}^{n}(Y_i-\bar{Y})^2}{n}, \ S_{XY} = \frac{\sum_{i=1}^{n}(X_i-\bar{X})(Y_i-\bar{Y})}{n}
+    \end{equation*}
+    When $n$ is extremely large, OLS slope estimator is expressed as $\hat{b} = \frac{S_{XY}}{S_{X}^2}$.\\
+    9. The OLS estimators $\hat{a}$ and $\hat{b}$ are consistent.\\
+    10. Total Sum of Squares = Explained Sum of Squares + Residual Sum of Squares
+    \begin{equation*}
+    \sum_{i=1}^{n}(Y_i-\bar{Y})^2 = \sum_{i=1}^{n}(\hat{Y_i}-\bar{Y})^2 + \sum_{i=1}^{n}\hat{e_i}^2
+    \end{equation*}
+    11. The sample estimate $r_{XY} = \frac{S_{XY}}{S_XS_Y}$, the estimator $\hat{b} = r_{XY}\frac{S_Y}{S_X}$.\\
+    12. The coefficient of determination $R^2$, which is called \textbf{goodness of fit statistic}, is defined as
+    \begin{equation*}
+    R^2 = \frac{ESS}{TSS} = r_{XY}^2
+    \end{equation*}
+    \\
+    \textbf{- Multipule Linear Regression:}\\
+    1. If $y$ depends on multiple variables, then we have multiple linear regression, Model M.\\
+    2. The \textbf{Mean Square Error} is variance plus squared bias, which is uncorrelated with the observed $x$.\\
+    3. The \textbf{AIC} for normally distributed errors
+    \begin{equation*}
+    AIC = T\ln(\frac{RSS}{T}) + 2K
+    \end{equation*}
+    The smaller AIC is, the better is the model in not over-fitting the data.\\
+    4. $R^2$ is defined in terms of variation about the mean of $y$, which means $R^2$ will change as long as model is rearranged. The drawback of using $R^2$ is that it never falls if more regressors are added.\\
+    5. The adjusted $R^2$ is defined to consider the loss of degrees of freedom.
+    \begin{equation*}
+    \bar{R}^2 = 1-\left[\frac{T-1}{T-K}(1-R^2)\right]
+    \end{equation*}
+    $\bar{R}^2$ is always smaller than $R^2$.\\
+    
+    \item \textbf{Capital Asset Pricing Model}\\\par
+    \textbf{- CAPM concepts:}\\
+    1. Insight of CAPM is that expected rate of excess return is proportional to the market risk
+    premium, without having to do mean-variance optimization.
+    \begin{equation*}
+    E(R_i)-R_f = \beta_i(E(R_m)-R_f)
+    \end{equation*}
+    where $E(R_i)-R_f$ is the risk premium on the capital asset,\\
+    $E(R_m)-R_f$ is the market premium, and\\
+    $\beta_i$ is the sensitivity of the expected excess asset returns to the expected excess market returns, defined as
+    \begin{equation*}
+    \beta_i = \frac{C(R_i,R_m)}{V(R_m)} = \rho_{i,m}\frac{\sigma_i}{\sigma_m}
+    \end{equation*}
+    2. Assumptions of Capital Asset Pricing Model\\
+    (a) No taxes;\\
+    (b) No transaction costs;\\
+    (c) All investors are risk-averse;\\
+    (d) All investors know their utility function of terminal wealth.\\
+    (e) All investors can maximize their utility function.\\
+    (f) All investors can choose among portfolios solely on the basis of mean and variance.\\
+    (g) All investors have homogeneous views regarding the parameters of the joint probability distribution of all security returns.\\
+    (h) All investors can borrow and lend at a given risk-less rate of interest.\\
+    \\
+    3. If the security's $(\beta_i,r_i)$ is plotted above the \textbf{Security Market Line}, it is considered undervalued, and the security gives a greater return against its inherent risk, vice versa.\\
+    \\
+    4. The \textbf{Treynor ratio} is defined as
+    \begin{equation*}
+    TR = \frac{r_i-r_f}{\beta_i}
+    \end{equation*}
+    All of the portfolios on SML have the same Treynor ratio as the market portfolio whose $\beta = 1$, which is the slope of the SML.\\
+    \\
+    5. The $\alpha_i$ is the abnormal extra return above the market's return at a given level of risk.
+    \begin{equation*}
+    \alpha_i = E(R_i)-R_f - \beta_i(E(R_m)-R_f)
+    \end{equation*}
+    When $\alpha_i < 0$, the investment has earned too litter for its risk, vice versa.\\
+    \\
+    \textbf{- OLS Approach to Market Model:}\\
+    1. A linear regression model of $r_{it}$ on $r_{mt}$ is
+    \begin{equation*}
+    \begin{split}
+    E(r_{it}|r_{mt}) & = E(r_{it}) + \frac{\sigma_{im}}{\sigma_{m}^2}(r_{mt}-E(r_{mt}))\\
+    E(r_{it}|r_{mt}) & = (E(r_{it}) - \frac{\sigma_{im}}{\sigma_{m}^2}E(r_{mt})) + \frac{\sigma_{im}}{\sigma_{m}^2}r_{mt}\\
+    r_{it} & = a + br_{mt} +e_{it}\\
+    r_{it}-r_{ft} & = a_i +b_i(r_{mt}-r_{ft}) +e_{it}
+    \end{split}
+    \end{equation*}
+    where $E(e_{it}|r_{mt}) = 0$ and $E(e_{it}) = 0$.\\
+    \\
+    2. OLS estimation of $\beta$ is
+    \begin{equation*}
+    \beta_i = \hat{b}_i = \frac{\sum_{t=1}^{T}(r_{mt}-\bar{r}_m)(r_{it}-\bar{r}_i)}{\sum_{t=1}^{T}(r_{mt}-\bar{r}_m)^2}
+    \end{equation*}
+    3. The \textbf{Shapre ratio} shows how well the portfolio is performing relative to CML with the slope $\frac{E(r_{mt}-r_{ft})}{\sigma_m}$.
+    \begin{equation*}
+    \frac{E(r_{pt}-r_{ft})}{\sigma_p}
+    \end{equation*}
+    4. $M^2$ measures the returns of the portfolio, adjusted for the risk of the portfolio relative to the market.
+    \begin{equation*}
+    M^2 = E(r_{pt}-r_{ft})\frac{\sigma_m}{\sigma_p} - E(r_{mt}-r_{ft})
+    \end{equation*}
+    5. The \textbf{information ratio} is defined as follows
+    \begin{equation*}
+    \frac{E(r_{pt}-r_{bt})}{\sigma_{p-b}}
+    \end{equation*}
+    where $\sigma_{p-b}$ is the standard deviation of the difference in returns between the portfolio and its benchmark, also referred to as \textbf{active risk}, or \textbf{tracking error}, and $r_{pt}-r_{bt}$ is also known as its \textbf{active return}.\\
+    
+    \item \textbf{F-Test \& Serial Correlation}\\\par
+    \textbf{- F-Test:}\\
+    1. $F$-test can be used to test more than one coefficient simultaneously, which involves estimating 2 regressions:\\
+    (a) \textbf{Unrestricted regression} is the one in which the coefficients are freely determined by the data.
+    \begin{equation*}
+    y_t = \beta_1 + \beta_2x_{2,t} + \beta_3x_{3,t} + \beta_4x_{4,t} + u_t
+    \end{equation*}
+    (b) \textbf{Restricted regression} is the one in which the coefficients are restricted.
+    \begin{equation*}
+    \begin{split}
+    (y_t-x_{4,t}) & = \beta_1 + \beta_2x_{2,t} + \beta_3(x_{3,t}-x_{4,t}) + u_t\\
+    P_t & = \beta_1 + \beta_2x_{2,t} + \beta_3Q_t +u_t
+    \end{split}
+    \end{equation*}
+    2. The test statistic is given by
+    \begin{equation*}
+    \text{test statistic} = \frac{\text{RRSS - URSS}}{\text{URSS}} \times \frac{T-K}{m}
+    \end{equation*}
+    where $m$ is the number of restriction.\\
+    The test statistic is always positive. The smaller the $F$-statistic, the less the loss of fit due to the restriction.\\
+    We only reject the null hypothesis if the test statistic is greater than critical $F$-value, which is $F(m,T-K)$.\\
+    \\
+    \textbf{- Serial Correlation:}\\
+    1. The residuals from an OLS regression may have a correlation structure
+    \begin{equation*}
+    u_i = \alpha u_{i-1} + \epsilon_i, \ i = 1,2,...,n.
+    \end{equation*}
+    If $\alpha$ is statistically non-zero, then the serial correlation exists, it will make OLS estimators inefficient.\\
+    \\
+    2. Test for Serial Correlation\\
+    (a) \textbf{Durbin-Watson Test}: $H_0:\ \alpha=0, \ H_A:\ \alpha \neq 0$\\
+    The approximation for $DW$ statistic is
+    \begin{equation*}
+    DW = 2(1-\hat{\alpha})
+    \end{equation*}
+    Accept $H_0$ (no autocorrelation) when $DW \approx 2$.\\
+    Here are the conditions that must be fulfilled for DW to be a valid test:\\
+    (a) $y$-intercept must be in the regression;\\
+    (b) Regressor $X_i$ is non-stochastic;\\
+    (c) The error $e_i$ is normally distributed.\\
+    (a) \textbf{Breusch-Godfrey Test}: $H_0:\ \alpha_i=0, \ for \ i=1,2,...,n. \ H_A:\ \alpha _i \neq 0, \ for\ i=1,2,...,n.$\\
+    
+    \item \textbf{Diagnostic Tests}\\\par
+    \textbf{- Heteroscedasticity:}\\
+    1. Heteroscedasticity is the situation that the errors do not have a constant vairance $\sigma_u^2$.\\
+    2. Tests for Heteroscedasticity are\\
+    (a) The \textbf{Goldfeld-Quandt Test} is to split the total sample of length $T$ into two sub-samples of length $T_1$ and $T_2$. The regression model is estimated on each sub-sample and the two residual variances are calculated.\\
+    The null hypothesis is that the variances of the disturbances are equal, $H_0: \sigma_1^2 = \sigma_2^2$\\
+    \textbf{Drawback}-Where to split the sample is usually arbitrary and may crucially affect the outcome of the test.\\
+    (b) The \textbf{White Test} is a better way to test heteroscedasticity, which shows that
+    \begin{equation*}
+    T \times R^2 \sim \chi^2(m)
+    \end{equation*}
+    where $m$ is the number of regressors in the auxiliary regression excluding the constant term.\\
+    If the $\chi^2$ test statistic is greater than the critical value, then reject the null hypothesis that the disturbances are homoscedastic.\\
+    3. Methods to deal with heteroscedasticity:\\
+    (a) Dividing the regression equation by $z_t$ which $V(u_t) = \sigma^2z_t^2$;\\
+    (b) Transforming the variables into logs.\\
+    \\
+    \textbf{- Multicollinearity:}\\
+    1. Multicollinearity occurs when the explanatory variables are very highly correlated with each other, which will cause (a) high standard errors of individual coefficients and (b) the regression become more sensitive to small changes.\\
+    2. The \textbf{matrix of correlations} between the individual variables will show whether the multicollinearity exists.\\
+    \textbf{Drawback}-The method will not work if 3 or more variables are linear.\\
+    \\
+    \textbf{- Wrong Functional Form:}\\
+    1. The functional form may not be linear in some case.\\
+    2. The \textbf{Ramsey’s RESET test} is a general test for mis-specification of functional form, by adding higher order terms of the fitted values in to an auxiliary regression.
+    \begin{equation*}
+    \hat{u}_t = \beta_0 + \beta_1\hat{y}_t^2 + \beta_2\hat{y}_t^3 + ... + \beta_{p-1}\hat{y}_t^p + v_t
+    \end{equation*}
+    By obtaining $R^2$ from this regression, the test statistic is given by
+    \begin{equation*}
+    T \times R^2 \sim \chi_{p-1}^2
+    \end{equation*}
+    If the value of the test statistic is greater than a $\chi^2$ critical value, then reject the null hypothesis that the functional form is correct.\\
+    \\
+    \textbf{- Errors in Variables:}\\
+    1. If an important variable is omitted, then\\
+    (a) The estimated coefficients on all the other variables will be biased and inconsistent;\\
+    (b) The estimate of the coefficient on the constant term will be biased;\\
+    (c) The standard errors will be biased.\\
+    \\
+    2. If an irrelevant variable is included which is called \textbf{the error of commission}, then\\
+    (a) The estimated coefficients will still be consistent and unbiased;\\
+    (b) The variance of the estimators will be inefficient.\\
+    \\
+    3. If there is measurement error in one or more of the explanatory variables, which is also called \textbf{errors in variables problem}, then\\
+    (a) The assumption that the explanatory variables are non-stochastic is violated;\\
+    (b) The estimated coefficients will be biased towards 0.\\
+    (c) For CAPM, since the $\beta$ is estimated at the first stage rather than directly observed which contains measurement error \textbf{(attenuation bias)}, the relationship between $\beta$ and returns may be smaller than expected.\\
+    $\Rightarrow$ The solution is to use portfolio $\beta$ in place of individual $\beta$.\\
+    \\
+    4. If there is measurement error in the explained variables, then\\
+    (a) The estimated coefficients will still be consistent and unbiased;\\
+    (b) The standard error will be enlarged relative to the situation where no measurement error in $y$.\\
+    \\
+    \textbf{- Parameter Instability:}\\
+    1. The coefficients may not be constant for the entire sample period.\\
+    2. Tests for Parameter Instability are\\
+    (a) The \textbf{Chow Test} is to split the data into 2 sub-periods, estimate 3 regressions altogether, the statistic is
+    \begin{equation*}
+    \text{test statistic} = \frac{RSS-(RSS_1+RSS_2)}{RSS_1+RSS_2} \times \frac{T-2K}{K} \sim F(K,T-2K)
+    \end{equation*}
+    If the value of the test statistic is greater than the critical value from the $F$-distribution, then reject the null hypothesis that the parameters are stable over time.\\
+    \textbf{Drawback}-The sample data volume should be large enough to do the regression.\\
+    (b) The \textbf{Predictive Failure Test} is to estimate the regression over a long sub-period, then we predict values for the other period and compare the two, the statistic is
+    \begin{equation*}
+    \text{test statistic} = \frac{RSS-RSS_1}{RSS_1} \times \frac{T_1-K}{T_2} \sim F(T_2,T_1-K)
+    \end{equation*}
+    If the value of the test statistic is greater than the critical value from the $F$-distribution, then reject the null hypothesis that the model can adequately predict the last few observations.\\
+    
+    \item \textbf{Stationary Process}\\\par
+    \textbf{- Trend Forecasting:}\\
+    1. Three models for Trend are\\
+    (a) If Trend is a simple linear function of time, then
+    \begin{equation*}
+    Trend_t = \beta_0 + \beta_1 Time_t
+    \end{equation*}
+    (b) If Trend is a quadratic function of time, then
+    \begin{equation*}
+    Trend_t = \beta_0 + \beta_1 Time_t + \beta_2 Time_t^2
+    \end{equation*}
+    (b) If Trend is a nonlinear function of time, then
+    \begin{equation*}
+    \ln(Trend_t) = \ln(\beta_0) + \beta_1 Time_t
+    \end{equation*}
+    2. The Mean Square Error corrected for degrees of freedom $K$ is
+    \begin{equation*}
+    s^2 = \frac{\sum_{t=1}^{T} \hat{e_t}^2}{T-K} = \frac{1}{1-\frac{K}{T}}\times \text{MSE}
+    \end{equation*}
+    3. The criteria that penalizes degrees of freedom are AIC and SIC
+    \begin{equation*}
+    \text{AIC} = e^{\frac{2K}{T}} \times \text{MSE}, \ \text{SIC} = T^{\frac{K}{T}} \times \text{MSE}
+    \end{equation*}
+    AIC remains inconsistent, even as the sample size becomes large, while SIC penalizes DF most heabily, is consistent.\\
+    \\
+    \textbf{- Time Series Processes:}\\
+    1. The components of a Time Series include\\
+    (a) Trend-cycle component - long-term and growth cycle movement;\\
+    (b) Seasonal component - systematic variations;\\
+    (c) Irregular component - randon fluctuations of short-term movements.\\
+    \\
+    2. The properties of \textbf{white noise} are\\
+    (a) $E(u_t) = 0$;\\
+    (b) $V(u_t) = \sigma_u^2$;\\
+    (c) $C(u_t,u_{t+k}) = 0$ for any $k \neq 0$;\\
+    (d) $u_t$ is independent of $u_{t+k}$.\\
+    \\
+    3. \textbf{AR(1)} - Autoregressive order one process is defined as
+    \begin{equation*}
+    \begin{split}
+    Y_t & = \delta + \lambda Y_{t-1} + u_t\\
+        & = (1+\lambda+\lambda^2+...)\delta + (u_t + \lambda u_{t-1} + \lambda^2 u_{t-2} +...)
+    \end{split}
+    \end{equation*}
+    The mean, variance and covariance for $Y_t$ are
+    \begin{equation*}
+    E(Y_t) = \frac{\delta}{1-\lambda}, \ V(Y_t) = \frac{\sigma_u^2}{1-\lambda^2}, \ C(Y_t,Y_{t-1}) = \lambda \frac{\sigma_u^2}{1-\lambda^2}
+    \end{equation*}
+    The serial correlation is $Corr(Y_{t+k},Y_t) = \lambda^k$.\\
+    \\
+    4. \textbf{MA(1)} - Moving Average order one process is defined as
+    \begin{equation*}
+    Y_t = \delta + u_t + \alpha u_{t-1}
+    \end{equation*}
+    The mean, variance and covariance for $Y_t$ are
+    \begin{equation*}
+    E(Y_t) = \delta, \ V(Y_t) = (1+\alpha^2)\sigma_u^2, \ C(Y_t,Y_{t-1}) = \alpha \sigma_u^2
+    \end{equation*}
+    The serial correlation is $Corr(Y_{t+k},Y_t) = \frac{\alpha}{1+\alpha^2}$; for $k>1$, the serial correlation is 0.\\
+    \\
+    5. \textbf{ARMA(1,1)} - Autoregressive Moving Average order one process is defined as
+    \begin{equation*}
+    Y_t = \delta + \lambda Y_{t-1}+ u_t + \alpha u_{t-1}
+    \end{equation*}
+    The mean, variance and covariance for $Y_t$ are
+    \begin{equation*}
+    E(Y_t) = \frac{\delta}{1-\lambda}, \ V(Y_t) = \sigma_u^2\left(1+\frac{(\lambda+\alpha)^2}{1-\lambda^2}\right), \ C(Y_t,Y_{t-k}) = \lambda^kV(Y_{t-k})
+    \end{equation*}
+    The serial correlation is $Corr(Y_{t+k},Y_t) = \frac{\alpha}{1+\alpha^2}$; for $k>1$, the serial correlation is 0.\\
+    \\
+    6. \textbf{Backward Shift Operator} - Introducing backward shift operator $B$
+    \begin{equation*}
+    B^kY_t = Y_{t-k}
+    \end{equation*}
+    The equation $\phi(B) = 0$ is called the \textbf{characteristic equation} of the AR$(p)$ process
+    \begin{equation*}
+    \phi(B) = 1 - \sum_{i=1}^{p}\lambda_iB^i
+    \end{equation*}
+    For AR$(p)$ to be stationary, the roots of the
+    characteristic equation must lie outside the unit circle.\\
+    For MA$(q)$ to be stationary, the process should be invertible, which requires $(1 + \alpha B) = 0$ lie outside the unit circle, which is satisfied if $|\alpha| < 1$.\\
+    \\
+    7. \textbf{ACF} allows the identification of either an AR or an MA process depending on whether the sample $r(k)$ decays slowly or are
+    clearly 0 after some lag $k$.
+    \begin{equation*}
+    \lim_{T \to \infty} r(k) = \rho(k)
+    \end{equation*}
+    \textbf{PACF} is used to identify the order $p$ for AR$(p)$, which cuts off after lag $p$.\\
+    
+    \item \textbf{GARCH Model}\\\par
+    \textbf{- Value at Risk:}\\
+    1. Value at Risk is the maximum loss over a specified horizon at a given confidence level $\alpha$.
+    \begin{equation*}
+    P(L \geq \text{VaR}_{\alpha}) = 1-\alpha
+    \end{equation*}
+    2. Exceedance is the event if an actual loss equals or exceeds the predicted VaR.\\
+    3. Absolute VaR is measured with respect to the current marked-to-market portfolio value.
+    \begin{equation*}
+    \text{VaR}_{\alpha} = 1 - e^{z_{1-\alpha}\sigma}
+    \end{equation*}
+    4. Relative VaR is computed taking into account the loss also of the expected profit $\mu P_0$.
+    \begin{equation*}
+    \text{VaR}_{\alpha} = 1 - e^{\mu+z_{1-\alpha}\sigma}
+    \end{equation*}
+    \textbf{- Autoregression Models:}\\
+    1. \textbf{ARCH} - Let $V_L$ be the long-run variance rate and $\gamma$ be the weight assigned
+    to $V_L$. The model for estimating the variance rate is
+    \begin{equation*}
+    \begin{split}
+    \sigma_n^2 & = \gamma V_L + \sum_{i=1}^m \alpha_i u_{n-i}^2\\
+    & = \omega + \sum_{i=1}^m \alpha_i u_{n-i}^2
+    \end{split}
+    \end{equation*}
+    where $\omega = \gamma V_L$ and $\gamma + \sum_{i=1}^{m} \alpha_i = 1$.\\
+    2. \textbf{EWMA} - A special case of ARCH where the weights $\alpha_i$ decrease exponentially at the decline rate $\lambda$ as moving back through time.
+    \begin{equation*}
+    \sigma_n^2  = \lambda \sigma_{n-1}^2 + (1-\lambda) u_{n-i}^2
+    \end{equation*}
+    \textbf{Advantage}-Only need to remember the current estimate of the variance rate and the most recent observation on the market variable.\\
+    3. \textbf{GARCH} - $\sigma_n^2$ is calculated from a long-run average variance rate $V_L$ as well as from $\sigma_{n-1}^2$ and $u_{n-1}^2$.\\
+    \begin{equation*}
+    \sigma_n^2  = \gamma V_L + \alpha u_{n-1}^2 + \beta\sigma_{n-1}^2
+    \end{equation*}
+    where $\gamma + \alpha + \beta = 1$.\\
+    The long-term variance $V_L$ can be calculated as
+    \begin{equation*}
+    \gamma V_L = \frac{\omega}{\gamma} = \frac{\omega}{1-\alpha-\beta}
+    \end{equation*}
+    which shows that the unconditional variance $\sigma^2$ is constant, GARCH processes are unconditionally stationary.
+\end{enumerate}
+\end{document}
